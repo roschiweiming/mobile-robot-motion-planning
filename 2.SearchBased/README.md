@@ -26,3 +26,46 @@ A星 算法
 # 结束循环
 ```
 
+Rviz可视化，路径点颜色为黑色
+
+![A*](picture/A*.png)
+
+
+
+### 性能对比
+
+A星启发式函数及是否使用tie breaker对比
+
+```c++
+// 在AstarPathFinder中设置heuristic_type_和use_Tie_breaker_变量，分别表示采用的启发式函数以及是否使用Tie breaker
+// 在程序中我们同时对比不同启发式函数及其是否使用tie breaker ，终端显示如下
+在demo_node.cpp中实例化如下对象：
+    AstarPathFinder * _astar_path_finder     = new AstarPathFinder();// 使用Manhattan作为启发式函数,无Tie breaker
+    AstarPathFinder * _astar_path_finder_with_Euclidean = new AstarPathFinder(Euclidean, false); //使用Euclidean作为启发式函数,无Tie breaker
+    AstarPathFinder * _astar_path_finder_with_Diagonal = new AstarPathFinder(Diagonal, false); // 使用Diagonal作为启发式函数,无Tie breaker
+    AstarPathFinder * _astar_path_finder_with_Dijkstra = new AstarPathFinder(Dijkstra, false); // 使用Diagonal作为启发式函数,无Tie breaker
+    AstarPathFinder * _astar_path_finder_with_Euclidean_TB = new AstarPathFinder(Euclidean, true); //使用Euclidean作为启发式函数,启动tie breaker
+```
+
+![terimal](picture/terimal.png)
+
+​                                       																	**Picture 1	terminal**
+
+​																								**Table 1** **Performance comparison** 
+
+![cmp](picture/cmp.png)
+
+​																												
+
+
+
+
+
+
+
+
+
+
+
+
+
