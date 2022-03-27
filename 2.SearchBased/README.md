@@ -34,7 +34,7 @@ Rviz可视化，路径点颜色为黑色
 
 ### 性能对比
 
-A星启发式函数及是否使用tie breaker对比
+#### A星启发式函数及是否使用tie breaker对比
 
 ```c++
 // 在AstarPathFinder中设置heuristic_type_和use_Tie_breaker_变量，分别表示采用的启发式函数以及是否使用Tie breaker
@@ -54,10 +54,6 @@ A星启发式函数及是否使用tie breaker对比
 ​																								**Table 1** **Performance comparison** 
 
 ![cmp](picture/cmp.png)
-
-​																												
-
-
 
 
 
