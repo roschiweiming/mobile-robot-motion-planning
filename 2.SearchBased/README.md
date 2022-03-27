@@ -49,10 +49,6 @@ Rviz可视化，路径点颜色为黑色
 
 ![terimal](picture/terimal.png)
 
-​                                       																	**Picture 1	terminal**
-
-​																								**Table 1** **Performance comparison** 
-
 ![cmp](picture/cmp.png)
 
 
