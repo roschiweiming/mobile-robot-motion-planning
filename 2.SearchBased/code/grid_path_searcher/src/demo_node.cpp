@@ -46,7 +46,7 @@ JPSPathFinder   * _jps_path_finder       = new JPSPathFinder();
 AstarPathFinder * _astar_path_finder_with_Euclidean = new AstarPathFinder(Euclidean, false); //使用Euclidean作为启发式函数
 AstarPathFinder * _astar_path_finder_with_Diagonal = new AstarPathFinder(Diagonal, false); // 使用Diagonal作为启发式函数
 AstarPathFinder * _astar_path_finder_with_Dijkstra = new AstarPathFinder(Dijkstra, false); // 使用Diagonal作为启发式函数
-AstarPathFinder * _astar_path_finder_with_Euclidean_TB = new AstarPathFinder(Euclidean, true); //使用Euclidean作为启发式函数,启动tie breaker
+AstarPathFinder * _astar_path_finder_with_Euclidean_TB = new AstarPathFinder(Diagonal, true); //使用Euclidean作为启发式函数,启动tie breaker
 
 void rcvWaypointsCallback(const nav_msgs::Path & wp);
 void rcvPointCloudCallBack(const sensor_msgs::PointCloud2 & pointcloud_map);
@@ -130,10 +130,6 @@ void pathFinding(const Vector3d start_pt, const Vector3d target_pt)
     //Reset map for next call
     _astar_path_finder->resetUsedGrids();
 
-    //_use_jps = 0 -> Do not use JPS
-    //_use_jps = 1 -> Use JPS
-    //you just need to change the #define value of _use_jps
-
     _astar_path_finder_with_Euclidean->AstarGraphSearch(start_pt, target_pt);
     _astar_path_finder_with_Euclidean->getPath();
     _astar_path_finder_with_Euclidean->getVisitedNodes();
@@ -154,7 +150,11 @@ void pathFinding(const Vector3d start_pt, const Vector3d target_pt)
     _astar_path_finder_with_Euclidean_TB->getVisitedNodes();
     _astar_path_finder_with_Euclidean_TB->resetUsedGrids();
 
-#define _use_jps 0
+    //_use_jps = 0 -> Do not use JPS
+    //_use_jps = 1 -> Use JPS
+    //you just need to change the #define value of _use_jps
+
+#define _use_jps 1
 #if _use_jps
     {
         //Call JPS to search for a path
@@ -218,7 +218,7 @@ int main(int argc, char** argv)
     _astar_path_finder_with_Dijkstra  = new AstarPathFinder(Dijkstra, false);
     _astar_path_finder_with_Dijkstra  -> initGridMap(_resolution, _map_lower, _map_upper, _max_x_id, _max_y_id, _max_z_id);
 
-    _astar_path_finder_with_Euclidean_TB  = new AstarPathFinder(Euclidean, true);
+    _astar_path_finder_with_Euclidean_TB  = new AstarPathFinder(Diagonal, true);
     _astar_path_finder_with_Euclidean_TB  -> initGridMap(_resolution, _map_lower, _map_upper, _max_x_id, _max_y_id, _max_z_id);
 
 

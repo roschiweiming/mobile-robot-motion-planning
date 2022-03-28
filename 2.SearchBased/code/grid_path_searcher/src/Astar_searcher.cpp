@@ -204,12 +204,11 @@ double AstarPathFinder::getHeu(GridNodePtr node1, GridNodePtr node2)
         }
     case Diagonal:
         {
-            double distance[3];
-            distance[0] = abs((double)(node1->index(0) - node2->index(0)));
-            distance[1] = abs((double)(node1->index(1) - node2->index(1)));
-            distance[2] = abs((double)(node1->index(2) - node2->index(2)));
-            std::sort(distance,distance+3);
-            hScore = distance[0] + distance[1] + distance[2] +(std::sqrt(3.0)-3) * distance[0] + (std::sqrt(2.0)-2)*distance[1];
+            double dx = abs(double(node1->index(0) - node2->index(0)));
+            double dy = abs(double(node1->index(1) - node2->index(1)));
+            double dz = abs(double(node1->index(2) - node2->index(2)));
+            double min_xyz = std::min({dx, dy, dz});
+            hScore = dx + dy + dz + (std::sqrt(3.0) - 3) * min_xyz;
             break;
         }
     case Dijkstra:
@@ -222,9 +221,17 @@ double AstarPathFinder::getHeu(GridNodePtr node1, GridNodePtr node2)
     }
 
     if (use_Tie_breaker_) {
-        double random = rand()%100/(double)101;
-        double p = random/100000;
-        hScore = hScore*(1.0 + p);
+        double dx1 = abs(double(node1->index(0) - node2->index(0)));
+        double dy1 = abs(double(node1->index(1) - node2->index(1)));
+        double dz1 = abs(double(node1->index(2) - node2->index(2)));
+
+        double dx2 = abs(double(startIdx(0) - node2->index(0)));
+        double dy2 = abs(double(startIdx(1) - node2->index(1)));
+        double dz2 = abs(double(startIdx(2) - node2->index(2)));
+
+        double cross1 = abs(dx1*dy2 - dx2*dy1);
+        double cross2 = abs(dz1*dy2 + dz2*dy1);
+        hScore = hScore + cross1 * 0.001 + cross2 * 0.001;
     }
 
     double fScore = hScore + gScore;
@@ -273,7 +280,7 @@ void AstarPathFinder::AstarGraphSearch(Vector3d start_pt, Vector3d end_pt)
     Vector3i start_idx = coord2gridIndex(start_pt);
     Vector3i end_idx   = coord2gridIndex(end_pt);
     goalIdx = end_idx;
-
+    startIdx = start_idx;
     //position of start_point and end_point
     start_pt = gridIndex2coord(start_idx);
     end_pt   = gridIndex2coord(end_idx);
