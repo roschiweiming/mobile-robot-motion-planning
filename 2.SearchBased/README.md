@@ -57,7 +57,7 @@ Rviz可视化，路径点颜色为黑色
 
 下表为是否使用tie breaker对A星算法的影响，本实验在同一张地图上随机选取了5个目标点进行路径搜索。从表中可以看出，使用tie breaker后，visited size减少，搜索效率有一定的提升。
 
-<img src="/home/chiweiming/Documents/mobile-robot-motion-planning/2.SearchBased/picture/Tie Breaker comparison.png" alt="Tie Breaker comparison" style="zoom:67%;" />
+<img src="picture/Tie Breaker comparison.png" alt="Tie Breaker comparison" style="zoom:67%;" />
 
 ### A星 and JPS
 
