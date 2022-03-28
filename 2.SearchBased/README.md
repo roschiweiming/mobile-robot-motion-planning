@@ -30,7 +30,7 @@ A星 算法
 
 Rviz可视化，路径点颜色为黑色
 
-![A*](picture/A*.png)
+<img src="picture/A*.png" alt="A*" style="zoom:50%;" />
 
 
 
@@ -53,15 +53,30 @@ Rviz可视化，路径点颜色为黑色
 
 <img src="picture/Heuristic function comparison.png" alt="Heuristic function comparison" style="zoom:67%;" />
 
+
+
 ### Tie Breaker 对A星算法的影响
 
 下表为是否使用tie breaker对A星算法的影响，本实验在同一张地图上随机选取了5个目标点进行路径搜索。从表中可以看出，使用tie breaker后，visited size减少，搜索效率有一定的提升。
 
 <img src="picture/Tie Breaker comparison.png" alt="Tie Breaker comparison" style="zoom:67%;" />
 
+
+
 ### A星 and JPS
 
-​		通常情况下，JPS要比A*工作的更好，尤其是在复杂环境下可以显著的减少遍历点的数目，但是在开阔的环境下，由于JPS的跳跃方式，会浪费大量资源在搜索无效的方向。
+```bash
+# 终端输出
+[ WARN] [1648453572.779771464]: [A*]{sucess}  Time in A*  is 0.124789 ms, path cost if 5.697736 m
+[ WARN] [1648453572.779811525]: A* path size: 24
+[ WARN] [1648453572.780430724]: visited_nodes size : 24
+
+[ WARN] [1648453572.828371329]: [JPS]{sucess} Time in JPS is 0.076754 ms, path cost if 5.697736 m
+[ WARN] [1648453572.828395463]: JPS* path size: 11
+[ WARN] [1648453572.829100472]: visited_nodes size : 13
+```
+
+​		通过终端输出，我们可以很直观的发现，在同样能够找到最优路径的条件下，JPS在本次地图中访问的点更少，运行速度更快。通常情况下，JPS要比A*工作的更好，尤其是在复杂环境下可以显著的减少遍历点的数目，但是在开阔的环境下，由于JPS的跳跃方式，会浪费大量资源在搜索无效的方向。
 
 
 
