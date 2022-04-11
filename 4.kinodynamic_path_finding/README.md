@@ -11,7 +11,7 @@
 
 ### Solution
 
-推到过程见文件 [OBVP.pdf](OBVP.pdf)
+推导过程见文件 [OBVP.pdf](OBVP.pdf)
 
 代码测试结果：
 
