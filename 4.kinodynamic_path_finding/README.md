@@ -11,7 +11,7 @@
 
 ### Solution
 
-
+推到过程见文件 [OBVP.pdf](OBVP.pdf)
 
 代码测试结果：
 
@@ -21,3 +21,4 @@
 
 ### Reference
 
+1. 伴随矩阵求特征值https://blog.csdn.net/fb_941219/article/details/102984587

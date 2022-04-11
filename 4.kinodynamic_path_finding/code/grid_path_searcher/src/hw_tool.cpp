@@ -112,14 +112,16 @@ double Homeworktool::OptimalBVP(Eigen::Vector3d _start_position,Eigen::Vector3d 
     double vy0 = _start_velocity(1);
     double vz0 = _start_velocity(2);
 
-    double vxf = 0,vyf = 0, vzf = 0;
+    double delta_P_x = pxf - px0;
+    double delta_P_y = pyf - py0;
+    double delta_P_z = pzf - pz0; 
 
 
     Eigen::Matrix<double,4,4> m;
 
-    double c0 = -36*( (pxf-px0)*(pxf-px0) + (pyf-py0)*(pyf-py0) + (pzf-pz0)*(pzf-pz0)) ;
-    double c1 = 24*((pxf-px0)*(vxf+vx0) + (pyf-py0)*(vyf+vy0) + (pzf-pz0)*(vzf+vz0));
-    double c2 = -4*(vx0*vx0 + vx0*vxf + vxf*vxf + vy0*vy0 + vy0*vyf + vyf*vyf + vz0*vz0 + vz0*vzf + vzf*vzf);
+    double c0 = -36*(delta_P_x*delta_P_x + delta_P_y*delta_P_y + delta_P_z*delta_P_z) ;
+    double c1 = 24*(delta_P_x*vx0 + delta_P_y*vy0 + delta_P_z*vz0);
+    double c2 = -4*(vx0*vx0 + vy0*vy0 + vz0*vz0);
     double c3 = 0.0;
 
     m << 0,0,0,-c0,
@@ -145,12 +147,12 @@ double Homeworktool::OptimalBVP(Eigen::Vector3d _start_position,Eigen::Vector3d 
 
         Eigen::Vector3d alpha,beta;
 
-        alpha(0) = 12*(px0-pxf+T*vx0)/T/T/T - 6*(vx0-vxf)/T/T;
-        alpha(1) = 12*(py0-pyf+T*vy0)/T/T/T - 6*(vy0-vyf)/T/T;
-        alpha(2) = 12*(pz0-pzf+T*vz0)/T/T/T - 6*(vz0-vzf)/T/T;
-        beta(0) = 2*(vx0-vxf)/T -6*(px0-pxf+T*vx0)/T/T;
-        beta(1) = 2*(vy0-vyf)/T -6*(py0-pyf+T*vy0)/T/T;
-        beta(2) = 2*(vz0-vzf)/T -6*(pz0-pzf+T*vz0)/T/T;
+        alpha(0) = -12*delta_P_x/T/T/T + 6*vx0/T/T;
+        alpha(1) = -12*delta_P_y/T/T/T + 6*vy0/T/T;
+        alpha(2) = -12*delta_P_z/T/T/T + 6*vz0/T/T;
+        beta(0) = 6*delta_P_x/T/T + -4*vx0/T;
+        beta(1) = 6*delta_P_y/T/T + -4*vy0/T;
+        beta(2) = 6*delta_P_z/T/T + -4*vz0/T;
 
         J = T + 1.0/3.0*alpha.dot(alpha)*std::pow(T,3) + alpha.dot(beta)*std::pow(T,2) + beta.dot(beta)*T;
 
